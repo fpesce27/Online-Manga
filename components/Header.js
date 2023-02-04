@@ -12,7 +12,7 @@ import { BsSearch, BsFillMoonFill, BsFillSunFill } from "react-icons/bs";
 import { useTheme as useNextTheme } from "next-themes";
 import Link from "next/link";
 
-function Header() {
+function Header({reading}) {
   const { setTheme } = useNextTheme();
   const { isDark, type } = useTheme();
 
@@ -24,7 +24,7 @@ function Header() {
   ];
 
   return (
-    <Navbar isBordered variant="floating">
+    <Navbar isBordered variant={reading ? 'static' : 'floating'}>
       <Navbar.Toggle aria-label="toggle navigation" showIn="sm" style={{ marginRight: 10 }} />
       <Navbar.Brand>
         <Link href="/">

@@ -2,7 +2,7 @@ import Header from "./Header";
 import Head from "next/head";
 import styles from "../styles/Layout.module.css";
 
-export default function App({ children, title }) {
+export default function App({ children, title, reading }) {
 
   return (
         <>
@@ -13,7 +13,7 @@ export default function App({ children, title }) {
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
             <div>
-                <Header />
+                <Header reading={reading}/>
                 <main className={styles.container}>
                     {children}
                 </main>

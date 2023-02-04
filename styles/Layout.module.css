@@ -1,5 +1,8 @@
 .container{
     padding: 25px 70px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
 }
 
 @media screen and (max-width: 950px) {
