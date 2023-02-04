@@ -7,14 +7,35 @@ import {
   Image,
   Switch,
   useTheme,
+  theme,
+  Loading,
 } from "@nextui-org/react";
 import { BsSearch, BsFillMoonFill, BsFillSunFill } from "react-icons/bs";
 import { useTheme as useNextTheme } from "next-themes";
 import Link from "next/link";
+import React from "react";
+import { useRouter } from "next/router";
+import styles from "@/styles/Manga.module.css";
 
 function Header({reading}) {
   const { setTheme } = useNextTheme();
   const { isDark, type } = useTheme();
+  const router = useRouter()
+  const {q} = router.query
+  const [search, setSearch] = React.useState(q);
+  const [loading, setLoading] = React.useState(false);
+
+
+  React.useEffect(() => {
+    if (search) {
+      setLoading(true);
+      const timer = setTimeout(() => {
+        setLoading(false);
+        router.push(`/manga/search?q=${search}`);
+      }, 2500);
+      return () => clearTimeout(timer);
+    }
+  }, [search]);
 
   const collapseItems = [
     "Anime",
@@ -24,6 +45,7 @@ function Header({reading}) {
   ];
 
   return (
+    <>
     <Navbar isBordered variant={reading ? 'static' : 'floating'}>
       <Navbar.Toggle aria-label="toggle navigation" showIn="sm" style={{ marginRight: 10 }} />
       <Navbar.Brand>
@@ -48,7 +70,10 @@ function Header({reading}) {
           <Input
             contentLeft={<BsSearch />}
             css={{ width: "$48" }}
-            placeholder="Search..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            aria-label="Search"
+            autoFocus={router.query.q ? true : false}
           />
         </Navbar.Item>
         <Dropdown placement="bottom-right">
@@ -99,7 +124,7 @@ function Header({reading}) {
           <Navbar.CollapseItem key={item}>
             <Link
               href={"/" + item.toLowerCase()}
-              style={{ color:'#000' }}
+              style={{ color:theme.colors.text }}
             >
               {item}
             </Link>
@@ -107,6 +132,12 @@ function Header({reading}) {
         ))}
       </Navbar.Collapse>
     </Navbar>
+    {loading && (
+      <div className={styles.loader}>
+        <Loading />
+      </div>
+    )}
+    </>
   );
 }
 

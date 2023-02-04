@@ -17,7 +17,6 @@ export function Slider({ series, title }) {
               css={{ borderRadius: "25px" }}
               objectFit="cover"
               showSkeleton
-              className={styles.mangaImage}
             />
             <div className={styles.mangaInfo}>
               <h3>{manga.title}</h3>

@@ -1,5 +1,6 @@
 import puppeteer from "puppeteer";
 import jsdom from "jsdom";
+import React from "react";
 
 export async function getImages(manga, chapter){
     // Abrimos una instancia del puppeteer y accedemos a la url
@@ -71,4 +72,28 @@ export async function getMangaById(id){
     const response = await fetch(url)
     const data = await response.json()
     return data
+}
+
+export async function searchMangas(search){
+    var results = []
+    const url = 'https://api.jikan.moe/v4/manga?letter=' + search
+    const response = await fetch(url)
+    const data = await response.json()
+
+    const mangas = await data.data.map(async (manga) => {
+        const url2 = "https://www.leercapitulo.com/manga/" + manga.title.toLowerCase().replace(/ /g, "-") + "/";
+        const response2 = await fetch(url2)
+        const status = response2.status
+
+        if (status == 200) {
+            results.push(manga)
+        }
+
+        console.log(results)
+
+    })
+
+    await Promise.all(mangas)
+
+    return results
 }

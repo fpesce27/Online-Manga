@@ -33,9 +33,13 @@ function Loading(){
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)
 
+  
   React.useEffect(() => {
-    const handleStart = (url) => url !== router.asPath && setLoading(true)
+    /* if router contains /search, do not show */
+    
+    const handleStart = (url) => url !== router.asPath && !url.includes('/search') && setLoading(true)
     const handleComplete = (url) => url === router.asPath && setLoading(false)
+
 
     router.events.on('routeChangeStart', handleStart)
     router.events.on('routeChangeComplete', handleComplete)
