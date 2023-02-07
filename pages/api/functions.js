@@ -1,57 +1,37 @@
 export async function getChapters(manga){
-    var osmosis = require('osmosis');
+
+    const cheerio = require('cheerio');
+    const axios = require('axios');
 
     const url = "https://www.leercapitulo.com/manga/" + manga + "/";
+    const response = await axios.get(url);
+    const $ = cheerio.load(response.data);
 
-    var chapters = []
+    const chapters = $('.chapter-list li').map((i, el) => {
+        const chapter = $(el).text().replace(/\n/g, "").replace(/\t/g, "");
+        const title = chapter.split(": ")[1] || ('')
+        const number = chapter.split(" ")[1].replace(/#/g, "")
+        return {number, title}
+    }).get()
 
-    const a = await new Promise ((resolve, reject) => {
-        osmosis
-        .get(encodeURI(url))
-        .find('.chapter-list')
-        .set({ 'elements' : ['li'] })
-        .log(console.log)
-        .error(console.log)
-        .data(function(data) {
-            chapters.push(data.elements)
-        })
-        .done(function() {
-            
-            try{
-                chapters = chapters[0]?.map((chapter) => {
-                    const title = chapter.split(": ")[1] || ('')
-                    const number = chapter.split(" ")[1].replace(/#/g, "")
-                    return {number, title}
-                })
-                resolve(chapters)
-            } catch (e) {
-                reject([])
-            }
-
-        })
-    })
-    
-    return a
+    return chapters
 }
 
 export async function getImages(manga, chapter){
-    var osmosis = require('osmosis');
 
-    const url = "https://www.leercapitulo.com/read/" + manga + "/" + chapter + "/#1";
-
-    var images = []
-
-    await osmosis
-        .get(url)
-        .find('.each-page div')
-        .set({ 'images' :  ['p']})
-        .data(function(data) {
-            images.push(data.images.map((image) => image.split(",")))
-        })
-        .log(console.log)
-        .error(console.log)
+    const cheerio = require('cheerio');
+    const axios = require('axios');
     
-    return images[0][0]
+    const url = "https://www.leercapitulo.com/read/" + manga + "/" + chapter + "/#1";
+    const response = await axios.get(url);
+    const $ = cheerio.load(response.data);
+
+    const images = $('.each-page div').map((i, el) => {
+        const image = $(el).find('p').text().split(",").map((image) => image.replace(/\n/g, "").replace(/\t/g, ""))
+        return image
+    }).get()
+
+    return images
 }
 
 export async function getMangas(filter){
