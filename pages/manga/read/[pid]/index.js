@@ -1,17 +1,32 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { getChapters, getMangaById } from "@/pages/api/functions";
+import { getChapters, getMangaById, formatTitle } from "@/pages/api/functions";
 import { Button, Image } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import Layout from "../../../../components/Layout";
 import styles from "../../../../styles/SelectChapter.module.css";
-import { BsArrowDown, BsArrowUp } from "react-icons/bs";
+import { BsArrowDown, BsArrowUp, BsFillPlayFill } from "react-icons/bs";
 import React from "react";
 import Link from "next/link";
+
 
 export async function getServerSideProps(context) {
   const { pid } = context.query;
   const manga = await getMangaById(pid);
-  const chapters = await getChapters(manga.data.title.toLowerCase().replace(/ /g, "-"));  
+  let chapters = await getChapters(formatTitle(manga.data.title)) || null;
+
+  if (chapters === null){
+    for (const title of manga.data.titles) {
+      try {
+        chapters = await getChapters(formatTitle(title.title)) || null;
+        if (chapters !== null) {
+          break;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+
   return {
     props: {
       manga,
@@ -20,15 +35,18 @@ export async function getServerSideProps(context) {
   };
 }
 
+
+
+
+
 function index({ manga, chapters }) {
   const router = useRouter();
   const { pid } = router.query;
   const [reverse, setReverse] = React.useState(false);
-  const c = chapters;
 
   const handleReverse = () => {
     setReverse(!reverse);
-    c.reverse();
+    chapters.reverse();
   };
 
   return (
@@ -78,11 +96,11 @@ function index({ manga, chapters }) {
         </Button>
       </div>
       <div className={styles.chaptersContainer}>
-          {chapters.map((chapter, index) => (
-            <Link key={index} className={styles.chapter} href={`/manga/read/${pid}/${chapter}`}>
-              <p>{chapter}</p>
-            </Link>
-          ))}
+        {chapters?.map((chapter, index) => (
+          <Link href={`/manga/read/${pid}/${chapter.number}`} key={index} className={styles.chapter}>
+            <p>{chapter.number} {chapter.title}</p>
+          </Link>
+        ))}
       </div>
     </Layout>
   );

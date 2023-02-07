@@ -8,6 +8,7 @@ import { SSRProvider } from "@react-aria/ssr";
 import { useRouter } from 'next/router';
 import LoadingScreen from '@/components/LoadingScreen';
 import React from 'react';
+import ErrorScreen from '@/components/ErrorScreen';
 
 export default function App({ Component, pageProps }) {
   return (
@@ -22,6 +23,7 @@ export default function App({ Component, pageProps }) {
       >
         <NextUIProvider>
           <Loading />
+          <Error />
           <Component {...pageProps} />
         </NextUIProvider>
       </ThemeProvider>
@@ -35,9 +37,8 @@ function Loading(){
 
   
   React.useEffect(() => {
-    /* if router contains /search, do not show */
     
-    const handleStart = (url) => url !== router.asPath && !url.includes('/search') && setLoading(true)
+    const handleStart = (url) => url !== router.asPath && setLoading(true)
     const handleComplete = (url) => url === router.asPath && setLoading(false)
 
 
@@ -56,4 +57,27 @@ function Loading(){
     <LoadingScreen />
   )
 
+}
+
+function Error(){
+  const router = useRouter()
+  const [error, setError] = React.useState(false)
+
+  React.useEffect(() => {
+    const handleError = (err, url) => {
+      if (url === router.asPath) {
+        setError(err)
+      }
+    }
+
+    router.events.on('routeChangeError', handleError)
+
+    return () => {
+      router.events.off('routeChangeError', handleError)
+    }
+  })
+
+  return error && (
+    <ErrorScreen />
+  )
 }

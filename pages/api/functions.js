@@ -1,68 +1,63 @@
-import puppeteer from "puppeteer";
-import jsdom from "jsdom";
-import React from "react";
-
-export async function getImages(manga, chapter){
-    // Abrimos una instancia del puppeteer y accedemos a la url
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-
-    const url = "https://www.leercapitulo.com/read/" + manga + "/" + chapter + "/#1";
-
-    const response = await page.goto(url);
-    const body = await response.text();
-
-    // Creamos una instancia del resultado devuelto por puppeter para parsearlo con jsdom
-    const {
-        window: { document },
-    } = new jsdom.JSDOM(body);
-
-    const pages = document
-        .querySelector(".each-page")
-        .textContent.replace(/\s/g, "")
-        .split(",")
-        .map((page) => {
-        return page.replace(/"/g, "");
-        });
-
-    await browser.close();
-
-    return pages;
-}
-
-export async function getChapters(manga, reverse){
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
+export async function getChapters(manga){
+    var osmosis = require('osmosis');
 
     const url = "https://www.leercapitulo.com/manga/" + manga + "/";
 
-    const response = await page.goto(url);
-    const body = await response.text();
+    var chapters = []
 
-    const {
-        window: { document },
-    } = new jsdom.JSDOM(body);
+    /* evaluate if url is valid */
+    const a = await new Promise ((resolve, reject) => {
+        osmosis
+        .get(encodeURI(url))
+        .find('.chapter-list')
+        .set({ 'elements' : ['li'] })
+        .log(console.log)
+        .error(console.log)
+        .data(function(data) {
+            chapters.push(data.elements)
+        })
+        .done(function() {
+            
+            try{
+                chapters = chapters[0]?.map((chapter) => {
+                    const title = chapter.split(": ")[1] || ('')
+                    const number = chapter.split(" ")[1].replace(/#/g, "")
+                    return {number, title}
+                })
+                resolve(chapters)
+            } catch (e) {
+                reject([])
+            }
 
-    /* leave only the numbers */
-    const chapters = document.querySelector(".chapter-list").textContent
+        })
+    })
+    
+    return a
+}
 
-    const lines = chapters.split("\n");
-    const c = [];
-    for (let line of lines) {
-      const match = line.match(/Capitulo ([\d.]+)/);
-      if (match) {
-        c.push(parseFloat(match[1]));
-      }
-    }
+export async function getImages(manga, chapter){
+    var osmosis = require('osmosis');
 
-    await browser.close();
+    const url = "https://www.leercapitulo.com/read/" + manga + "/" + chapter + "/#1";
 
-    return c;
+    var images = []
+
+    await osmosis
+        .get(url)
+        .find('.each-page div')
+        .set({ 'images' :  ['p']})
+        .data(function(data) {
+            images.push(data.images.map((image) => image.split(",")))
+        })
+        .log(console.log)
+        .error(console.log)
+    
+    return images[0][0]
 }
 
 export async function getMangas(filter){
     const url = 'https://api.jikan.moe/v4/top/manga'
-    const response = await fetch(url + '?page=1&limit=6&filter=' + filter)
+    const response = await fetch(url + '?page=3&limit=6&filter=' + filter)
     const data = await response.json()
     return data
 }
@@ -89,11 +84,13 @@ export async function searchMangas(search){
             results.push(manga)
         }
 
-        console.log(results)
-
     })
 
     await Promise.all(mangas)
 
     return results
+}
+
+export function formatTitle(title){
+    return title.toLowerCase().replace(/ /g, "-").replace(/:/g, "").replace(/'/g, "-");
 }

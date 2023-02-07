@@ -9,13 +9,13 @@ import {
   useTheme,
   theme,
   Loading,
+  Container,
 } from "@nextui-org/react";
 import { BsSearch, BsFillMoonFill, BsFillSunFill } from "react-icons/bs";
 import { useTheme as useNextTheme } from "next-themes";
 import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/router";
-import styles from "@/styles/Manga.module.css";
 
 function Header({reading}) {
   const { setTheme } = useNextTheme();
@@ -23,8 +23,7 @@ function Header({reading}) {
   const router = useRouter()
   const {q} = router.query
   const [search, setSearch] = React.useState(q);
-  const [loading, setLoading] = React.useState(false);
-
+  const [loading, setLoading] = React.useState(false)
 
   React.useEffect(() => {
     if (search) {
@@ -48,16 +47,26 @@ function Header({reading}) {
     <>
     <Navbar isBordered variant={reading ? 'static' : 'floating'}>
       <Navbar.Toggle aria-label="toggle navigation" showIn="sm" style={{ marginRight: 10 }} />
-      <Navbar.Brand>
-        <Link href="/">
+      <Navbar.Brand hideIn='xs'>
+        <Link href="/" >
           <Logo />
         </Link>
       </Navbar.Brand>
+      <Navbar.Brand showIn="xs">
+        <Input
+          contentLeft={loading ? <Loading /> : <BsSearch />}
+          css={{ width: "$40" }}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          aria-label="Search"
+          autoFocus={router.query.q ? true : false}
+        />
+      </Navbar.Brand>
       <Navbar.Content hideIn="sm" enableCursorHighlight variant='underline'>
-        <Navbar.Link href="/anime"> Anime </Navbar.Link>
+        <Navbar.Link href="/anime">Anime</Navbar.Link>
         <Navbar.Link href="/manga">Manga</Navbar.Link>
-        <Navbar.Link href="/manga">Clubs</Navbar.Link>
-        <Navbar.Link href="/manga">Random</Navbar.Link>
+        <Navbar.Link href="/clubs">Clubs</Navbar.Link>
+        <Navbar.Link href="/random">Random</Navbar.Link>
       </Navbar.Content>
       <Navbar.Content>
           <Switch
@@ -68,7 +77,7 @@ function Header({reading}) {
 
         <Navbar.Item hideIn='xs'>
           <Input
-            contentLeft={<BsSearch />}
+            contentLeft={loading ? <Loading size="xs" type="gradient"/> : <BsSearch />}
             css={{ width: "$48" }}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -132,11 +141,6 @@ function Header({reading}) {
         ))}
       </Navbar.Collapse>
     </Navbar>
-    {loading && (
-      <div className={styles.loader}>
-        <Loading />
-      </div>
-    )}
     </>
   );
 }
