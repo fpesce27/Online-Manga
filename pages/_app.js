@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }) {
       >
         <NextUIProvider>
           <Loading />
-          <Error />
+          {/* <Error /> */}
           <Component {...pageProps} />
         </NextUIProvider>
       </ThemeProvider>

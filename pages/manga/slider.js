@@ -7,7 +7,7 @@ export function Slider({ series, title }) {
     <>
       <h1>{title}</h1>
       <div className={styles.mangasContainer}>
-        {series.map((manga, index) => (
+        {series?.map((manga, index) => (
           <Link key={index} className={styles.manga} href={`/manga/read/${manga.mal_id}`}>
             <Image
               src={manga.images.jpg.image_url}

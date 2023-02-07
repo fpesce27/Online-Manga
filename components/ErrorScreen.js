@@ -1,7 +1,14 @@
 import styles from "@/styles/LoadingScreen.module.css";
 import { theme } from "@nextui-org/react";
+import React from "react";
 
 function ErrorScreen() {
+
+    React.useEffect(() => {
+        setTimeout(() => {
+            window.location.reload();
+        }, 5000);
+    }, []);
 
   return (
     <div
@@ -43,6 +50,9 @@ function ErrorScreen() {
           <li style={{ background: theme.colors.accents9 }}></li>
           <li style={{ background: theme.colors.accents9 }}></li>
         </ul>
+        <div className={styles.text}>
+          <p style={{ color: theme.colors.accents9 }}>An Error Has Ocurred, Reloading!</p>
+        </div>
       </div>
 
     </div>

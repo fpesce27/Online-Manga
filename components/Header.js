@@ -34,7 +34,7 @@ function Header({reading}) {
       }, 2500);
       return () => clearTimeout(timer);
     }
-  }, [search]);
+  }, [search, router]);
 
   const collapseItems = [
     "Anime",

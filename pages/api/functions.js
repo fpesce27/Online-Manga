@@ -57,7 +57,7 @@ export async function getImages(manga, chapter){
 
 export async function getMangas(filter){
     const url = 'https://api.jikan.moe/v4/top/manga'
-    const response = await fetch(url + '?page=3&limit=6&filter=' + filter)
+    const response = await fetch(url + '?page=1&limit=6&filter=' + filter)
     const data = await response.json()
     return data
 }
