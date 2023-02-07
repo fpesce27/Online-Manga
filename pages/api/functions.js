@@ -70,26 +70,25 @@ export async function getMangaById(id){
 }
 
 export async function searchMangas(search){
-    var results = []
-    const url = 'https://api.jikan.moe/v4/manga?letter=' + search
-    const response = await fetch(url)
-    const data = await response.json()
+    const url = 'https://api.jikan.moe/v4/manga?q=' + search;
+    const response = await fetch(url);
+    const data = await response.json();
 
-    const mangas = await data.data.map(async (manga) => {
+    const mangas = data.data.map(async (manga) => {
         const url2 = "https://www.leercapitulo.com/manga/" + manga.title.toLowerCase().replace(/ /g, "-") + "/";
-        const response2 = await fetch(url2)
-        const status = response2.status
+        const response2 = await fetch(url2);
+        const status = response2.status;
 
-        if (status == 200) {
-            results.push(manga)
+        if (status === 200) {
+            return manga;
         }
+    });
 
-    })
+    const results = await Promise.all(mangas);
 
-    await Promise.all(mangas)
-
-    return results
+    return results.filter(manga => manga !== undefined);
 }
+
 
 export function formatTitle(title){
     return title.toLowerCase().replace(/ /g, "-").replace(/:/g, "").replace(/'/g, "-");
