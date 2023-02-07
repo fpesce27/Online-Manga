@@ -5,7 +5,6 @@ export async function getChapters(manga){
 
     var chapters = []
 
-    /* evaluate if url is valid */
     const a = await new Promise ((resolve, reject) => {
         osmosis
         .get(encodeURI(url))
@@ -56,17 +55,30 @@ export async function getImages(manga, chapter){
 }
 
 export async function getMangas(filter){
+    const axios = require('axios');
+
     const url = 'https://api.jikan.moe/v4/top/manga'
-    const response = await fetch(url + '?page=1&limit=6&filter=' + filter)
-    const data = await response.json()
-    return data
+
+    const response = await axios.get(url, {
+        params: {
+            page: 1,
+            limit: 6,
+            filter: filter
+        }
+    })
+
+    return response.data
+
 }
 
 export async function getMangaById(id){
+    const axios = require('axios');
+
     const url = 'https://api.jikan.moe/v4/manga/' + id
-    const response = await fetch(url)
-    const data = await response.json()
-    return data
+
+    const response = await axios.get(url)
+
+    return response.data
 }
 
 export async function searchMangas(search){

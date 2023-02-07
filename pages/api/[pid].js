@@ -11,7 +11,7 @@ import {
 export default async (req, res) => {
   switch (req.method) {
     case "GET":
-      const { manga, chapter, filter, id, search } = req.query;
+      const { manga, chapter, filter, id, search } = req.body;
       switch (req.url) {
         case "/api/chapters":
           const chapters = await getChapters(manga);
