@@ -1,0 +1,62 @@
+.chaptersContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: scroll;
+    height: 500px;
+    padding: 50px;
+}
+
+.chaptersContainer::-webkit-scrollbar{
+    display: none;
+}
+
+.chapter{
+    background-color: var(--blue900);   
+    border-radius: 25px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease-in-out;
+    padding: 10px;
+}
+
+.chapter p{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+.chaptersControls{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+}
+
+.icon{
+    z-index: -1 !important;
+}
+
+.filtersContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 25px;
+    padding: 0 50px;
+}
+
+
+
+
+
+/* media queries */
+@media screen and (max-width: 768px){
+    .chaptersContainer{
+        height: 300px;
+    }
+}
