@@ -7,7 +7,7 @@ async function getData(manga_id: string) {
 }
 
 async function getChapters(manga_id: string) {
-  const data = await fetch("https://manga-online-api.vercel.app/api/" + manga_id + "/chapters");
+  const data = await fetch("https://manga-online-api.vercel.app/api/" + manga_id + "/chapters", {next: {revalidate: 3}});
   return data.json();
 }
 
