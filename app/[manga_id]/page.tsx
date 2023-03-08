@@ -17,7 +17,7 @@ async function page({ params }: { params: { manga_id: string } }) {
   return (
     <>
         <DataContainer mangaData={mangaData.data} />
-        <ChapterSelect chapters={chapters} id={params.manga_id}/>
+        <ChapterSelect chapters={chapters} id={params.manga_id} manga={mangaData.data}/>
     </>
   );
 }

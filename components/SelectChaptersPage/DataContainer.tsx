@@ -1,5 +1,5 @@
 'use client'
-import { Manga } from '@/constants/interfaces'
+import { Manga } from '@/constants/mangas'
 import { Image } from '@nextui-org/react'
 import styles from './styles/dataContainer.module.css'
 

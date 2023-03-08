@@ -1,4 +1,5 @@
 export interface Mangas {
+    current_chapter: number;
     pagination: Pagination;
     data:       Manga[];
 }

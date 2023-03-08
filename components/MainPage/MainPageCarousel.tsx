@@ -1,11 +1,12 @@
 "use client";
-import { Manga, Mangas } from "@/constants/interfaces";
+import { Manga, Mangas } from "@/constants/mangas";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Image, Text } from "@nextui-org/react";
 import styles from "./styles/carousel.module.css";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
+
 
 function MainPageCarousel({ mangas }: { mangas: Mangas }) {
   return (
@@ -17,7 +18,7 @@ function MainPageCarousel({ mangas }: { mangas: Mangas }) {
       showArrows={false}
       showThumbs={false}
     >
-      {mangas.data.map((manga, index) => (
+      {mangas.data?.map((manga, index) => (
         <ShowMangaInfo manga={manga} key={index} />
       ))}
     </Carousel>

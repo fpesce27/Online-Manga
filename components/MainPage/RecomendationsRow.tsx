@@ -1,9 +1,9 @@
 "use client";
-import { Mangas } from "@/constants/interfaces";
+import { Mangas } from "@/constants/mangas";
 import { Text } from "@nextui-org/react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { MangaCard } from "./MangaCard";
+import { MangaCard } from "../Globals/MangaCard";
 import styles from "./styles/recomendations.module.css";
 import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 
@@ -14,6 +14,7 @@ function RecomendationsRow({
   mangas: Mangas;
   title: string;
 }) {
+  const current_chapter = mangas.current_chapter;
   return (
     mangas && (
       <div style={{ margin: 35, position: "relative" }}>
@@ -50,8 +51,11 @@ function RecomendationsRow({
             );
             }}
         >
-          {mangas.data.map((manga, index) => (
-            <MangaCard manga={manga} key={index} />
+          {mangas.data?.map((manga, index) => (
+            <div style={{ display: "flex", flexDirection: "column", alignItems:'center', justifyContent:'center' }}>
+              <MangaCard manga={manga} key={index} current_chapter={current_chapter}/>
+              {current_chapter && ( <Text size="1.5em">Capitulo {current_chapter} </Text> )}
+            </div>
           ))}
         </Carousel>
       </div>

@@ -6,7 +6,6 @@ async function getResults(searchParams: string) {
 }
 
 async function page({ searchParams }: { searchParams: any }) {
-  console.log(searchParams.q);
   const results = await getResults(searchParams.q);
 
   return (

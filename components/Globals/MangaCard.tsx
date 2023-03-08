@@ -1,12 +1,12 @@
 'use client';
-import { Manga } from '@/constants/interfaces';
+import { Manga } from '@/constants/mangas';
 import { Image, Text } from '@nextui-org/react';
 import Link from 'next/link';
-import styles from './styles/mangaCard.module.css';
+import styles from './mangaCard.module.css';
 
-export function MangaCard({ manga }: { manga: Manga; }) {
+export function MangaCard({ manga, current_chapter }: { manga: Manga, current_chapter: number }) {
     return (
-        <Link href={'/' + manga.mal_id} className={styles.cardContent}>
+        <Link className={styles.cardContent} href={current_chapter ? `/read/${manga.mal_id}/${current_chapter}` : '/' + manga.mal_id}>
             <Image 
                 src={manga.images["jpg"].large_image_url} 
                 alt={manga.title} 

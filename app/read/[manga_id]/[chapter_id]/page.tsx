@@ -9,9 +9,11 @@ async function getData(manga: number, chapter: number) {
 async function page({params}: {params: {manga_id: number, chapter_id: number}}) {
     const data = await getData(params.manga_id, params.chapter_id);
   return (
+    data.length === 0 ? <h1>No images found Sorry </h1> : (
     <FullscreenButton>
         <Carrousel images={data} />
     </FullscreenButton>
+  )
 );
 }
 

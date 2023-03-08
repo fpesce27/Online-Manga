@@ -3,6 +3,7 @@ import { Image } from "@nextui-org/react";
 import { Carousel } from "react-responsive-carousel";
 import styles from '@/app/page.module.css'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { db } from "@/db/firebase";
 
 function Carrousel({images} : {images : string[]}) {
   return (
@@ -25,6 +26,7 @@ function Carrousel({images} : {images : string[]}) {
               />
             </div>
           ))}
+
       </Carousel>
   )
 }
