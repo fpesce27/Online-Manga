@@ -25,6 +25,7 @@ function RecomendationsRow({
           centerSlidePercentage={20}
           centerMode
           autoPlay
+          infiniteLoop
           showIndicators={false}
           showStatus={false}
           showThumbs={false}

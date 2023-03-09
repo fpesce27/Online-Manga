@@ -1,6 +1,10 @@
 import ChapterSelect from "@/components/SelectChaptersPage/ChapterSelect";
 import DataContainer from "@/components/SelectChaptersPage/DataContainer";
 
+export const metadata = {
+  title: "Seleccionar Capitulo - Online Manga",
+}
+
 async function getData(manga_id: string) {
   const data = await fetch("https://manga-online-api.vercel.app/api/manga/" + manga_id);
   return data.json();

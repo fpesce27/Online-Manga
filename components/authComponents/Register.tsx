@@ -105,20 +105,11 @@ export default function Register() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 status={error ? 'error' : 'default'}
-                helperText={error ? 'Email or password is incorrect' : ''}
+                helperText={error ? 'Debes completar todos los campos' : ''}
                 helperColor="error"
             />
-            <Spacer y={2} />
-            <Row justify="space-between">
-                <Checkbox>
-                <Text size={14}>Recordarme</Text>
-                </Checkbox>
-                <Link href="/forgot-password">
-                    <Text size={14}>Olvidaste Contraseña?</Text>
-                </Link>
-            </Row>
 
-            <Spacer y={1} />
+            <Spacer y={2} />
 
             <Button onClick={register}>Registrarse</Button>
             </Card>

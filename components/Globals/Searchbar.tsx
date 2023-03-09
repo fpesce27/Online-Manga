@@ -21,7 +21,7 @@ function Searchbar(props : {search : string, setSearch : (value : string) => voi
                   dflex: "center",
                 },
               }}
-              placeholder="Search..."
+              placeholder="Buscar manga..."
               onChange={(e) => props.setSearch(e.target.value)}
               value={props.search}
             />

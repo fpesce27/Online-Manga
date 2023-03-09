@@ -70,7 +70,7 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 status={error ? 'error' : 'default'}
-                helperText={error ? 'Email or password is incorrect' : ''}
+                helperText={error ? 'El Email o la contraseña son incorrectos' : ''}
                 helperColor="error"
             />
             <Spacer y={2} />

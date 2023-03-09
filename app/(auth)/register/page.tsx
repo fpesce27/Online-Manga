@@ -1,5 +1,8 @@
 import Register from '@/components/authComponents/Register'
-import React from 'react'
+
+export const metadata = {
+  title: "Register - Online Manga",
+}
 
 function page() {
   return (

@@ -1,6 +1,5 @@
 'use client'
 import { Button } from '@nextui-org/react'
-import Link from 'next/link'
 import React from 'react'
 import styles from './styles/buttons.module.css'
 import { useRouter } from 'next/navigation'

@@ -32,7 +32,7 @@ export default function App() {
   }, [search, router]);
 
   return (
-    <Navbar isBordered variant="sticky">
+    <Navbar isBordered variant="static">
       <Navbar.Brand css={{ mr: "$4" }}>
         <Link href="/">
           <Text b color="inherit" css={{ mr: "$11" }} hideIn="xs">

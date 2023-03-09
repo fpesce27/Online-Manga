@@ -4,8 +4,13 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ['nine.mangadogs.com'],
-  }, 
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+    ],
+  },
 }
 
 module.exports = nextConfig
