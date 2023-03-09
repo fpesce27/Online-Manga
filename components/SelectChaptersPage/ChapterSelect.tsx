@@ -5,7 +5,7 @@ import styles from './styles/chapterSelect.module.css'
 import Searchbar from '../Globals/Searchbar';
 import { Button } from '@nextui-org/react';
 import { BsArrowDown, BsArrowUp } from 'react-icons/bs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {auth, db} from '@/db/firebase'
 
 function ChapterSelect({chapters, id, manga} : {chapters: Chapter[], id: string, manga: Manga}) {
@@ -16,6 +16,20 @@ function ChapterSelect({chapters, id, manga} : {chapters: Chapter[], id: string,
         setReverse(!reverse)
         chapters.reverse()
     }
+    const [lastChapterRead, setLastChapterRead] = useState(0)
+
+    useEffect(() => {
+        if (auth.currentUser){
+            const querySnapshot = db.collection('users').doc(auth.currentUser?.uid).collection('continue_reading').get()
+            querySnapshot.then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    if (doc.data().manga.mal_id === manga.mal_id){
+                        setLastChapterRead(doc.data().current_chapter)
+                    }
+                })
+            })
+        }
+    }, [])
 
     const saveLastChapter = async (number : number) => {
         let savedChapter = false
@@ -51,7 +65,7 @@ function ChapterSelect({chapters, id, manga} : {chapters: Chapter[], id: string,
                 {chapters.filter((chapter) => chapter.title.toLowerCase().includes(search.toLowerCase()) || chapter.number.toString().includes(search)).map((chapter, index) => (
                 <Link href={`/read/${id}/${chapter.number}`} key={index} className={styles.chapter} onClick={() => saveLastChapter(chapter.number)}
                     style={{
-                        backgroundColor: 'var(--nextui-colors-accents0)',
+                        backgroundColor: chapter.number <= lastChapterRead ? `lightgreen` : `var(--nextui-colors-accents0)`,
                         border: `1px solid var(--nextui-colors-accents9)`,
                         boxShadow: `0 0 10px var(--nextui-colors-accents5)`
                     }}>

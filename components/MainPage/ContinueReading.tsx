@@ -7,17 +7,7 @@ import { MangaCard } from "../Globals/MangaCard";
 import { Text } from "@nextui-org/react";
 import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 import { Carousel } from "react-responsive-carousel";
-
-async function waitForAuthInit() {
-  return new Promise((resolve) => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        unsubscribe();
-        resolve(user);
-      }
-    });
-  });
-}
+import { waitForAuthInit } from "@/constants/functions";
 
 function ContinueReading() {
   const [mangas, setMangas] = React.useState<Mangas | any>([]);
@@ -37,10 +27,9 @@ function ContinueReading() {
     })();
   }, []);
   return (
-    mangas.length > 0 && (
       <div style={{ margin: 35, position: "relative" }}>
         <Text size="2em" style={{ marginBottom: 20 }}>
-          Continuar Leyendo
+          {mangas.length > 0 ? "Continuar Leyendo" : ""}
         </Text>
         <Carousel
           centerSlidePercentage={20}
@@ -86,7 +75,7 @@ function ContinueReading() {
           ))}
         </Carousel>
       </div>
-    )
+    
   );
 }
 

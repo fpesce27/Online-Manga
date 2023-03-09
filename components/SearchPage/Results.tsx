@@ -10,7 +10,7 @@ function Results({results} : {results : Mangas}) {
         <div className={styles.resultsContainer}>
 
             {results.data?.map((manga : Manga, index : number) => (
-                <MangaCard manga={manga} key={index} />
+                <MangaCard manga={manga} key={index} current_chapter={0}/>
             ))}
 
             {results.data?.length === 0 && (

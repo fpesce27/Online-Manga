@@ -72,7 +72,7 @@ export default function App() {
 const Auth = () => {
   const [user, setUser] = useState<any>(null);
 
-
+  useEffect(() => {
     auth.onAuthStateChanged((a) => {
       if (a) {
         setUser(a);
@@ -80,7 +80,7 @@ const Auth = () => {
         setUser(null);
       }
     });
-
+    }, []);
 
   return user ? <LoggedUser user={user}/> : <NotLoggedUser />;
   

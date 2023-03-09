@@ -7,11 +7,13 @@ const actionKeys = {
   logout: "logout()",
 }
 
-export default function LoggedUser({ user }: { user: User }) {
+export default function LoggedUser({ user }) {
   const collapseItems = ["Log Out"];
 
   function logout(){
     auth.signOut();
+    /* reload */
+    window.location.reload();
   };
 
   return (
@@ -25,14 +27,14 @@ export default function LoggedUser({ user }: { user: User }) {
                 as="button"
                 color="primary"
                 size="md"
-                src={user.photoURL!}
+                src={user.photoURL}
               />
             </Dropdown.Trigger>
           </Navbar.Item>
           <Dropdown.Menu
             aria-label="User menu actions"
             color="primary"
-            onAction={(actionKey) =>eval(actionKeys[actionKey])}
+            onAction={(actionKey) => eval(actionKeys[actionKey])}
           >
             <Dropdown.Item
               key="profile"
