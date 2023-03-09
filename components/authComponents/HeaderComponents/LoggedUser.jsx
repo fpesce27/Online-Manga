@@ -12,7 +12,6 @@ export default function LoggedUser({ user }) {
 
   function logout(){
     auth.signOut();
-    /* reload */
     window.location.reload();
   };
 
