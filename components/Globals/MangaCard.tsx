@@ -6,7 +6,7 @@ import styles from './mangaCard.module.css';
 
 export function MangaCard({ manga, current_chapter }: { manga: Manga, current_chapter: number }) {
     return (
-        <Link className={styles.cardContent} href={current_chapter ? `/read/${manga.mal_id}/${current_chapter}` : '/' + manga.mal_id}>
+        <Link className={styles.cardContent} href={current_chapter ? `/read/${manga.mal_id}/${current_chapter + 1}` : '/' + manga.mal_id}>
             <Image 
                 src={manga.images["jpg"].large_image_url} 
                 alt={manga.title} 

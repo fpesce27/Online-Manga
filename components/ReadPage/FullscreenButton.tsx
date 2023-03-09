@@ -9,7 +9,7 @@ import styles from './styles/cascade.module.css'
 function App({children, images} : {children : React.ReactNode, images : string[]}) {
   const handle = useFullScreenHandle();
   const [showCascade, setShowCascade] = useState(false)
-
+  console.log(images);
   return (
     <>
       <Button onClick={handle.enter}>

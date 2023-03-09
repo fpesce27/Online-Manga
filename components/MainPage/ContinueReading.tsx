@@ -69,7 +69,7 @@ function ContinueReading() {
                 current_chapter={data.current_chapter}
               />
               {data.current_chapter && (
-                <Text size="1.5em">Capitulo {data.current_chapter} </Text>
+                <Text size="1.5em">Capitulo {data.current_chapter + 1} </Text>
               )}
             </div>
           ))}
