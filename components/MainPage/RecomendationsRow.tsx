@@ -6,6 +6,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { MangaCard } from "../Globals/MangaCard";
 import styles from "./styles/recomendations.module.css";
 import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
+import useWindowSize from "./windowSize"
 
 function RecomendationsRow({
   mangas,
@@ -14,6 +15,7 @@ function RecomendationsRow({
   mangas: Mangas;
   title: string;
 }) {
+  const size = useWindowSize();
   const current_chapter = mangas.current_chapter;
   return (
     mangas && (
@@ -23,7 +25,7 @@ function RecomendationsRow({
         </Text>
         <Carousel
           centerSlidePercentage={20}
-          centerMode
+          centerMode={size.width! > 768 ? true : false}
           autoPlay
           infiniteLoop
           showIndicators={false}

@@ -34,3 +34,34 @@
     margin: 25px 0;
     width: 100%;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* media queries */
+@media screen and (max-width: 768px){
+    .mangaInfo{
+        grid-template-columns: 1fr;
+    }
+    .mangaInfoText{
+        padding: 25px;
+    }
+    .synopsis{
+        -webkit-line-clamp: 5;
+    }
+    .mangaInfoTextButtons{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

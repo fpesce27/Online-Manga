@@ -8,12 +8,12 @@ export const metadata = {
 }
 
 async function getData() {
-  const data = await fetch("https://manga-online-api.vercel.app/api/randomMangas", {next: {revalidate:60} });
+  const data = await fetch(process.env.BACKEND_URL +  "/randomMangas", {next: {revalidate:60} });
   return data.json();
 }
 
 async function getRecommendations(filter : string) {
-  const data = await fetch('https://manga-online-api.vercel.app/api/' + filter)
+  const data = await fetch(process.env.BACKEND_URL  + '/' + filter)
   return data.json()
 }
 

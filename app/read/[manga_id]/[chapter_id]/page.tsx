@@ -2,7 +2,7 @@ import FullscreenButton from "@/components/ReadPage/FullscreenButton";
 import PrevAndNextButtons from "@/components/ReadPage/PrevAndNextButtons";
 
 async function getMangaData(manga_id: number) {
-  const data = await fetch("https://manga-online-api.vercel.app/api/manga/" + manga_id);
+  const data = await fetch(process.env.BACKEND_URL + "/manga/" + manga_id);
   return data.json();
 }
 
@@ -14,7 +14,7 @@ export async function generateMetadata({params}: {params: {manga_id: number, cha
 }
 
 async function getData(manga: number, chapter: number) {
-  const data = await fetch("https://manga-online-api.vercel.app/api/manga/" + manga + "/" + chapter);
+  const data = await fetch(process.env.BACKEND_URL + "/manga/chapters/" + manga + "/" + chapter);
   return data.json();
 }
 

@@ -8,9 +8,11 @@ import { Text } from "@nextui-org/react";
 import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 import { Carousel } from "react-responsive-carousel";
 import { waitForAuthInit } from "@/constants/functions";
+import useWindowSize from "./windowSize";
 
 function ContinueReading() {
   const [mangas, setMangas] = React.useState<Mangas | any>([]);
+  const size = useWindowSize();
 
   React.useEffect(() => {
     (async () => {
@@ -33,7 +35,8 @@ function ContinueReading() {
         </Text>
         <Carousel
           centerSlidePercentage={20}
-          centerMode
+          centerMode={size.width! > 768 ? true : false}
+          infiniteLoop
           showIndicators={false}
           showStatus={false}
           showThumbs={false}

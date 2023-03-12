@@ -10,8 +10,8 @@ export function MangaCard({ manga, current_chapter }: { manga: Manga, current_ch
             <Image 
                 src={manga.images["jpg"].large_image_url} 
                 alt={manga.title} 
-                width='20vw' 
-                height='300px'
+                width='100vw' 
+                height='100vh'
                 css={{ borderRadius: "25px" }}
                 objectFit="cover"
             />

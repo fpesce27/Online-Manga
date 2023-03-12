@@ -46,3 +46,27 @@
     gap: 10px;
     overflow-y: scroll;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* media queries */
+@media screen and (max-width: 768px){
+    .cardContent{
+        width: 150px;
+        height: 225px;
+    }
+    .cardContentText{
+        width: 150px;
+        height: 225px;
+    }
+}

@@ -6,12 +6,12 @@ export const metadata = {
 }
 
 async function getData(manga_id: string) {
-  const data = await fetch("https://manga-online-api.vercel.app/api/manga/" + manga_id);
+  const data = await fetch(process.env.BACKEND_URL + "/manga/" + manga_id);
   return data.json();
 }
 
 async function getChapters(manga_id: string) {
-  const data = await fetch("https://manga-online-api.vercel.app/api/" + manga_id + "/chapters", {next: {revalidate: 3}});
+  const data = await fetch(process.env.BACKEND_URL + "/manga/chapters/" + manga_id, {next: {revalidate: 3}});
   return data.json();
 }
 
