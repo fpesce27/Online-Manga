@@ -14,7 +14,7 @@ export async function generateMetadata({params}: {params: {manga_id: number, cha
 }
 
 async function getData(manga: number, chapter: number) {
-  const data = await fetch(process.env.BACKEND_URL + "/manga/chapters/" + manga + "/" + chapter);
+  const data = await fetch(process.env.BACKEND_URL + "/manga/chapters/" + manga + "/" + chapter, {next : {revalidate:10}});
   return data.json();
 }
 
