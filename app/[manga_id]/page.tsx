@@ -11,7 +11,7 @@ async function getData(manga_id: string) {
 }
 
 async function getChapters(manga_id: string) {
-  const data = await fetch(process.env.BACKEND_URL + "/manga/chapters/" + manga_id, {next: {revalidate: 3}});
+  const data = await fetch(process.env.BACKEND_URL_V2 + "/manga/chapters/" + manga_id, {next: {revalidate: 3}});
   return data.json();
 }
 

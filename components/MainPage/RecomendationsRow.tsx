@@ -16,7 +16,7 @@ function RecomendationsRow({
   title: string;
 }) {
   const size = useWindowSize();
-  const current_chapter = mangas.current_chapter;
+  const current_chapter = mangas?.current_chapter;
   return (
     mangas && (
       <div style={{ margin: 35, position: "relative" }}>
