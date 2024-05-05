@@ -5,15 +5,20 @@ import RecomendationsRow from "@/components/MainPage/RecomendationsRow";
 export const metadata = {
   title: "Home - Online Manga",
   description: "Online Manga is a website where you can read your favorite mangas online for free",
+  manifest: "/manifest.json",
+  icons: {
+    apple: "/icon.png"
+  },
+  themeColor: "#000"
 }
 
 async function getData() {
-  const data = await fetch(process.env.BACKEND_URL +  "/randomMangas", {next: {revalidate:60} });
+  const data = await fetch(process.env.BACKEND_URL + "/randomMangas", { next: { revalidate: 60 } });
   return data.json();
 }
 
-async function getRecommendations(filter : string) {
-  const data = await fetch(process.env.BACKEND_URL  + '/' + filter)
+async function getRecommendations(filter: string) {
+  const data = await fetch(process.env.BACKEND_URL + '/' + filter)
   return data.json()
 }
 
@@ -22,12 +27,12 @@ export default async function Home() {
   const recommendations = await getRecommendations('recommendations')
 
   return (
-      <>
-        <MainPageCarousel mangas={upcomingMangas} />
+    <>
+      <MainPageCarousel mangas={upcomingMangas} />
 
-        <ContinueReading />
-        <RecomendationsRow mangas={recommendations.highestRated} title='Mejores Valorados'/>
-        <RecomendationsRow mangas={recommendations.mostPopular} title='Más Populares'/>
-      </>
+      <ContinueReading />
+      <RecomendationsRow mangas={recommendations.highestRated} title='Mejores Valorados' />
+      <RecomendationsRow mangas={recommendations.mostPopular} title='Más Populares' />
+    </>
   );
 }

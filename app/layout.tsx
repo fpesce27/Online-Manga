@@ -1,8 +1,8 @@
 'use client'
-import './globals.css'
-import { createTheme, NextUIProvider } from "@nextui-org/react"
+import Header from '@/components/Globals/Header';
+import { createTheme, NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
-import Header from '@/components/Globals/Header'
+import './globals.css';
 
 export default function RootLayout({
   children,
@@ -12,19 +12,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-      <NextThemesProvider
-        defaultTheme="system"
-        attribute="class"
-        value={{
-          light: lightTheme.className,
-          dark: darkTheme.className
-        }}
-      >
-        <NextUIProvider>
-          <Header />
-          {children}
-        </NextUIProvider>
-      </NextThemesProvider>
+        <NextThemesProvider
+          defaultTheme="system"
+          attribute="class"
+          value={{
+            light: lightTheme.className,
+            dark: darkTheme.className
+          }}
+        >
+          <NextUIProvider>
+            <Header />
+            {children}
+          </NextUIProvider>
+        </NextThemesProvider>
       </body>
     </html>
   )
